@@ -1,0 +1,50 @@
+.booking-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: sans-serif;
+  }
+  
+  .seats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .seat {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .seat.selected {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .seat.occupied {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .booking-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .booking-form button {
+    padding: 10px 20px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  

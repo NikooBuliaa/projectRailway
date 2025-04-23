@@ -1,16 +1,36 @@
 import { Component } from '@angular/core';
-import { PaidTicketComponent } from "./paid-ticket/paid-ticket.component";
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { PaidTicketComponent } from './paid-ticket/paid-ticket.component'; // PaidTicketComponent-ის იმპორტი
 
 @Component({
   selector: 'app-transaction-page',
-  // imports: [],
   standalone: true,
+  imports: [CommonModule, FormsModule, PaidTicketComponent], // იმპორტი
   templateUrl: './transaction-page.component.html',
-  styleUrl: './transaction-page.component.scss',
-  imports: [PaidTicketComponent]
+  styleUrls: ['./transaction-page.component.scss']
 })
 export class TransactionPageComponent {
+  payment = {
+    cardNumber: '',
+    expiry: '',
+    cvc: '',
+    cardHolder: ''
+  };
 
+  paymentSuccess = false;
+  paymentError = false;
+  paid = false; // თუ გადახდა განხორციელდა, ის True გახდება
 
-  paid = false
+  // submitPayment ფუნქცია
+  submitPayment() {
+    if (this.payment.cardNumber && this.payment.expiry && this.payment.cvc && this.payment.cardHolder) {
+      this.paymentSuccess = true;
+      this.paymentError = false;
+      this.paid = true; // გადახდა შესრულდა
+    } else {
+      this.paymentSuccess = false;
+      this.paymentError = true;
+    }
+  }
 }

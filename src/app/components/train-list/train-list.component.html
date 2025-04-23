@@ -1,19 +1,33 @@
-<p>train-list works!</p>
+<div class="container my-5">
+  <h3 class="text-center mb-4">მატარებლის ძებნა</h3>
 
-<select name="" id=""  [(ngModel)]="from">
-    <option value="თბილისი">თბილისი</option>
-    <option value="ბათუმი">ბათუმი</option>
-    <option value="ფოთი">ფოთი</option>
-</select>
+  <div class="form-row">
+    <div>
+      <label for="from" class="form-label">საიდან</label>
+      <select id="from" class="form-select custom-select" [(ngModel)]="from">
+        <option value="თბილისი">თბილისი</option>
+        <option value="ბათუმი">ბათუმი</option>
+        <option value="ფოთი">ფოთი</option>
+      </select>
+    </div>
 
-<select name="" id="" [(ngModel)]="to">
-    <option value="თბილისი">თბილისი</option>
-    <option value="ბათუმი">ბათუმი</option>
-    <option value="ფოთი">ფოთი</option>
-</select>
+    <div>
+      <label for="to" class="form-label">სად</label>
+      <select id="to" class="form-select custom-select" [(ngModel)]="to">
+        <option value="თბილისი">თბილისი</option>
+        <option value="ბათუმი">ბათუმი</option>
+        <option value="ფოთი">ფოთი</option>
+      </select>
+    </div>
 
-<input type="date" name="" id="" [(ngModel)]="date" />
-<button (click)="search()">Search</button>
+    <div>
+      <label for="date" class="form-label">გამგზავრების თარიღი</label>
+      <input type="date" id="date" class="form-control custom-input" [(ngModel)]="date">
+    </div>
 
-
-
+    <div>
+      <label class="form-label invisible">ძებნა</label>
+      <button class="btn btn-lg btn-primary custom-btn" (click)="search()">მატარებლის მოძებნა</button>
+    </div>
+  </div>
+</div>

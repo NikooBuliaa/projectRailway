@@ -1,0 +1,32 @@
+<div class="booking-container">
+    <h2>დაჯავშნა - {{ trainData?.name }}</h2>
+  
+    <div *ngIf="vagonData">
+      <h3>ვაგონი {{ vagonData.vagon_number }} ({{ vagonData.class }})</h3>
+  
+      <div class="seats">
+        <button
+          *ngFor="let seat of vagonData.seats"
+          [ngClass]="{
+            'seat': true,
+            'selected': seat === selectedSeat,
+            'occupied': seat.booked
+          }"
+          [disabled]="seat.booked"
+          (click)="selectSeat(seat)"
+        >
+          {{ seat.seat_number }}
+        </button>
+      </div>
+    </div>
+  
+    <div class="booking-form">
+      <input type="text" placeholder="მგზავრის სახელი" [(ngModel)]="passengerName" />
+      <button (click)="bookTicket()" [disabled]="!selectedSeat || !passengerName">
+        დაჯავშნე
+      </button>
+    </div>
+  
+    <p *ngIf="ticketStatus">{{ ticketStatus }}</p>
+  </div>
+  
