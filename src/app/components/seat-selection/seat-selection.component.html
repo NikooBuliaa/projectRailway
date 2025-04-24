@@ -1,1 +1,29 @@
-<p>seat-selection works!</p>
+<h2>აირჩიე ადგილი</h2>
+
+<div class="seats">
+  <div 
+    *ngFor="let seat of seats" 
+    class="seat"
+    [class.first-class]="seat.class === 'first'"
+    [class.second-class]="seat.class === 'second'"
+    [class.business-class]="seat.class === 'business'"
+    [class.taken]="!seat.isAvailable"
+    [class.selected]="selectedSeat?.id === seat.id"
+    (click)="selectSeat(seat)">
+    {{ seat.number }}
+  </div>
+</div>
+
+<button 
+  *ngIf="selectedSeat" 
+  (click)="confirmBooking()" 
+  class="confirm-btn">
+  დააჯავშნე ადგილი {{ selectedSeat.number }}
+</button>
+
+<div class="status" *ngIf="bookingStatus">{{ bookingStatus }}</div>
+
+<div *ngIf="showStatusCheck" class="ticket-status-check">
+  <button (click)="checkStatus()">შეამოწმე ბილეთის სტატუსი</button>
+  <div *ngIf="ticketStatus">{{ ticketStatus }}</div>
+</div>

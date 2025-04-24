@@ -1,48 +1,51 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-train-list',
   standalone: true,
-  imports: [FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './train-list.component.html',
   styleUrls: ['./train-list.component.scss']
 })
-export class TrainListComponent  {
-  trains: any[] = [];
-  from : string =""
-  to:string =""
-  date:string =""
+export class TrainListComponent implements OnInit {
+  private api = inject(ApiService);
+  private router = inject(Router);
 
-  constructor(
-    private api: ApiService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  stations: any[] = [];
+  from = '';
+  to = '';
+  date = '';
 
-  // ngOnInit(): void {
-  //   this.route.queryParams.subscribe(params => {
-  //     const { departure, destination, date } = params;
-  //     this.api.getDepartures(departure, destination, date).subscribe(result => {
-  //       this.trains = result[0]?.trains || [];
-  //       console.log(this.trains);
-  //     });
-  //   });
-  // }
+  departures: any[] = [];
+  loading = false;
 
-
-  search(){
-    this.api.getDepartures(this.from, this.to, this.date).subscribe(result => {
-      this.trains = result[0]?.trains || [];
-      console.log(this.trains);
+  ngOnInit() {
+    this.api.getStations().subscribe((stations) => {
+      this.stations = stations;
     });
   }
 
-  book(trainId: number): void {
-    this.router.navigate(['/booking'], {
-      queryParams: { train_id: trainId }
+  search() {
+    if (!this.from || !this.to || !this.date) return;
+
+    this.loading = true;
+    this.api.getDepartures(this.from, this.to, this.date).subscribe({
+      next: (res) => {
+        this.departures = res;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('შეცდომა ძებნისას', err);
+        this.loading = false;
+      }
     });
+  }
+
+  selectTrain(departure: any) {
+    this.router.navigate(['/seats', departure.train_id]);
   }
 }

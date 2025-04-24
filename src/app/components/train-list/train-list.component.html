@@ -1,33 +1,34 @@
-<div class="container my-5">
-  <h3 class="text-center mb-4">მატარებლის ძებნა</h3>
+<h2>მატარებლის ძებნა</h2>
 
-  <div class="form-row">
-    <div>
-      <label for="from" class="form-label">საიდან</label>
-      <select id="from" class="form-select custom-select" [(ngModel)]="from">
-        <option value="თბილისი">თბილისი</option>
-        <option value="ბათუმი">ბათუმი</option>
-        <option value="ფოთი">ფოთი</option>
-      </select>
-    </div>
+<form (ngSubmit)="search()">
+  <label>სადგური:</label>
+  <select [(ngModel)]="from" name="from">
+    <option *ngFor="let station of stations" [value]="station.id">
+      {{ station.name }}
+    </option>
+  </select>
 
-    <div>
-      <label for="to" class="form-label">სად</label>
-      <select id="to" class="form-select custom-select" [(ngModel)]="to">
-        <option value="თბილისი">თბილისი</option>
-        <option value="ბათუმი">ბათუმი</option>
-        <option value="ფოთი">ფოთი</option>
-      </select>
-    </div>
+  <label>მიმართულება:</label>
+  <select [(ngModel)]="to" name="to">
+    <option *ngFor="let station of stations" [value]="station.id">
+      {{ station.name }}
+    </option>
+  </select>
 
-    <div>
-      <label for="date" class="form-label">გამგზავრების თარიღი</label>
-      <input type="date" id="date" class="form-control custom-input" [(ngModel)]="date">
-    </div>
+  <label>თარიღი:</label>
+  <input type="date" [(ngModel)]="date" name="date" />
 
-    <div>
-      <label class="form-label invisible">ძებნა</label>
-      <button class="btn btn-lg btn-primary custom-btn" (click)="search()">მატარებლის მოძებნა</button>
-    </div>
-  </div>
+  <button type="submit">ძებნა</button>
+</form>
+
+<div *ngIf="loading">იტვირთება...</div>
+
+<div *ngIf="departures.length > 0">
+  <h3>ნაპოვნი მატარებლები:</h3>
+  <ul>
+    <li *ngFor="let dep of departures">
+      მატარებელი #{{ dep.train_id }} | დრო: {{ dep.time }}
+      <button (click)="selectTrain(dep)">არჩევა</button>
+    </li>
+  </ul>
 </div>

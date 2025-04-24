@@ -1,0 +1,67 @@
+.seats {
+    display: grid;
+    grid-template-columns: repeat(4, 60px);
+    gap: 12px;
+    justify-content: center;
+    margin: 20px auto;
+  }
+  
+  .seat {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    transition: 0.2s;
+  
+    &.first-class {
+      background-color: #1e88e5;
+    }
+  
+    &.second-class {
+      background-color: #43a047;
+    }
+  
+    &.business-class {
+      background-color: #f4511e;
+    }
+  
+    &.taken {
+      background-color: gray;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  
+    &.selected {
+      border: 3px solid gold;
+    }
+  }
+  
+  .confirm-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #009688;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: darken(#009688, 10%);
+    }
+  }
+  
+  .status, .ticket-status-check {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 16px;
+    color: #444;
+  }
+  
