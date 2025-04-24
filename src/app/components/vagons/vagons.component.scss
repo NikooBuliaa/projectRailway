@@ -1,0 +1,16 @@
+
+.btns{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    .btnSeat{
+        width: 100px;
+        height: 35px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        box-shadow: 5px 5px 5px #888888;
+    }
+
+}

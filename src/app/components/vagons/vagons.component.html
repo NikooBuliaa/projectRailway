@@ -1,0 +1,36 @@
+<p>vagons works!</p>
+
+
+<div class="vagon" *ngFor="let vagon of vagons">
+    <h3>{{vagon.name}}</h3>
+    <p>Train Number: {{vagon.trainNumber}}</p>
+    <div class="btns">
+        <button class="btnSeat" [disabled]="seat.isOccupied" 
+           *ngFor="let seat of vagon.seats"
+            (click)="selectSeat(seat.seatId, vagon.trainId)">
+            {{seat.number}}-{{seat.price}} GEL
+        </button>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- : 
+isOccupied
+: 
+false
+number
+: 
+"6A"
+price
+: 
+75
+seatId
+: 
+"ef212abe-81b4-4334-bee4-02d636aa4ce5"
+vagonId
+: 
+37 -->

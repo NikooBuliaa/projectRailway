@@ -8,5 +8,7 @@ export const routes: Routes = [
     {path: 'trains', loadComponent: () => import('./components/train-list/train-list.component').then(m => m.TrainListComponent)},
     {path: 'booking', loadComponent: () => import('./pages/booking-page/booking-page.component').then(m => m.BookingPageComponent)},
     {path: 'transaction', loadComponent: () => import('./pages/transaction-page/transaction-page.component').then(m => m.TransactionPageComponent)},
+    {path: 'vagons/:id', loadComponent: () => import('./components/vagons/vagons.component').then(m => m.VagonsComponent)},
+
     {path: '**', component: ErrorComponent} 
 ];

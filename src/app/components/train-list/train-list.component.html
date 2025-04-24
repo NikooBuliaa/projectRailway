@@ -16,4 +16,20 @@
 <button (click)="search()">Search</button>
 
 
+<div class="tarins">
+    <div class="train" *ngFor="let train of trains">
+        <h3>{{train.name}}</h3>
+        <p>Departure: {{train.departure}}</p>
+        <p>Arrival: {{train.arrive}}</p>
+        <p>Date: {{train.date}}</p>
+        <p>Number: {{train.id}}</p>
+
+        <button routerLink="/vagons/{{vagon.id}}" *ngFor="let vagon of train.vagons"> {{vagon.name}}</button>
+    
+    </div>
+</div>
+
+
+
+
 
