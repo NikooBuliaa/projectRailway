@@ -1,32 +1,41 @@
-<div class="booking-container">
-    <h2>დაჯავშნა - {{ trainData?.name }}</h2>
-  
-    <div *ngIf="vagonData">
-      <h3>ვაგონი {{ vagonData.vagon_number }} ({{ vagonData.class }})</h3>
-  
+<div class="booking-page">
+  <h2>ბილეთის დაჯავშნა</h2>
+
+  <div *ngIf="trainData">
+    <h3>{{ trainData.name }} - მატარებლის დეტალები</h3>
+    <p>მატარებლის ნომერი: {{ trainData.train_number }}</p>
+    <p>მატარებლის ტიპი: {{ trainData.type }}</p>
+  </div>
+
+  <div *ngIf="vagonData">
+    <h3>ვაგონი: {{ vagonData.name }}</h3>
+    <div class="seat-selection">
+      <h4>აირჩიეთ ადგილი</h4>
       <div class="seats">
-        <button
-          *ngFor="let seat of vagonData.seats"
-          [ngClass]="{
-            'seat': true,
-            'selected': seat === selectedSeat,
-            'occupied': seat.booked
-          }"
-          [disabled]="seat.booked"
-          (click)="selectSeat(seat)"
-        >
-          {{ seat.seat_number }}
-        </button>
+        <div *ngFor="let seat of vagonData.seats" class="seat" 
+             [class.selected]="seat === selectedSeat"
+             [class.unavailable]="seat.status === 'unavailable'"
+             (click)="selectSeat(seat)">
+          <span>{{ seat.seat_number }}</span>
+        </div>
       </div>
     </div>
-  
-    <div class="booking-form">
-      <input type="text" placeholder="მგზავრის სახელი" [(ngModel)]="passengerName" />
-      <button (click)="bookTicket()" [disabled]="!selectedSeat || !passengerName">
-        დაჯავშნე
-      </button>
-    </div>
-  
-    <p *ngIf="ticketStatus">{{ ticketStatus }}</p>
   </div>
-  
+
+  <div *ngIf="selectedSeat">
+    <h4>თქვენი არჩეული ადგილი: {{ selectedSeat.seat_number }}</h4>
+  </div>
+
+  <div>
+    <label for="passenger-name">მგზავრის სახელი:</label>
+    <input type="text" id="passenger-name" [(ngModel)]="passengerName" placeholder="მგზავრის სახელი" />
+
+    <button class="book-button" (click)="bookTicket()" [disabled]="!passengerName || !selectedSeat">
+      ბილეთის დაჯავშნა
+    </button>
+  </div>
+
+  <div *ngIf="ticketStatus">
+    <p class="ticket-status">{{ ticketStatus }}</p>
+  </div>
+</div>

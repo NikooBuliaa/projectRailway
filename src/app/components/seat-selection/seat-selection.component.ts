@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-seat-selection',
@@ -10,19 +11,27 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./seat-selection.component.scss']
 })
 export class SeatSelectionComponent implements OnInit {
-  private api = inject(ApiService);
-
   seats: any[] = [];
   selectedSeat: any = null;
-  trainId = 1;     // მაგ: URL-იდან ან მიმდინარე ტრეინიდან წამოსაღები
-  userId = 12345;  // დროებით მომხმარებლის ID
+  trainId: number = 1; // URL-დან წამოსაღებად
+  userId: number = 12345; // დროებითი მომხმარებელი
+  travelDate: string = ''; // თუ გექნება, შეგიძლია URL-დანაც წამოიღო
 
   bookingStatus: string = '';
   showStatusCheck = false;
   ticketIdForCheck: number | null = null;
   ticketStatus: string = '';
 
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
   ngOnInit() {
+    this.trainId = +this.route.snapshot.paramMap.get('trainId')!;
+    this.travelDate = this.route.snapshot.queryParamMap.get('date') || new Date().toISOString().split('T')[0];
+
     this.api.getVagon(1).subscribe({
       next: (data) => this.seats = data,
       error: (err) => console.error('ვაგონის ჩატვირთვის შეცდომა:', err)
@@ -66,6 +75,21 @@ export class SeatSelectionComponent implements OnInit {
       error: () => {
         this.ticketStatus = 'სტატუსის გამოთხოვა ვერ მოხერხდა.';
       }
+    });
+  }
+
+  goToBooking() {
+    if (!this.selectedSeat) return;
+
+    const ticketData = {
+      trainId: this.trainId,
+      seat: this.selectedSeat,
+      date: this.travelDate,
+      userId: this.userId
+    };
+
+    this.router.navigate(['/booking'], {
+      state: { ticketData }
     });
   }
 }

@@ -1,43 +1,22 @@
-<div class="booking-container">
-    <h2>ბილეთის დაჯავშნა</h2>
-  
-    <form (ngSubmit)="searchDepartures()">
-      <div class="form-group">
-        <label>გამგზავრების სადგური:</label>
-        <select [(ngModel)]="fromStation" name="from" required>
-          <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-group">
-        <label>დანიშნულების სადგური:</label>
-        <select [(ngModel)]="toStation" name="to" required>
-          <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
-        </select>
-      </div>
-  
-      <div class="form-group">
-        <label>თარიღი:</label>
-        <input type="date" [(ngModel)]="selectedDate" name="date" required />
-      </div>
-  
-      <button type="submit">მატარებლების ძიება</button>
-    </form>
-  
-    <div *ngIf="departures.length">
-      <h3>მატარებლები:</h3>
-      <div *ngFor="let dep of departures" class="departure-card">
-        <p><strong>მატარებელი:</strong> {{ dep.trainId }}</p>
-        <p><strong>თარიღი:</strong> {{ dep.date }} | <strong>დრო:</strong> {{ dep.time }}</p>
-        <p><strong>თავისუფალი ადგილები:</strong> {{ dep.availableSeats }}</p>
-  
-        <input type="text" [(ngModel)]="passengerName" placeholder="მგზავრის სახელი" name="name" />
-        <button (click)="bookTicket(dep)">დაჯავშნა</button>
-      </div>
+<div class="container mt-5">
+  <h3 class="mb-4">დაჯავშნის დეტალები</h3>
+
+  <div *ngIf="ticketData">
+    <ul class="list-group mb-3">
+      <li class="list-group-item">მატარებელი: {{ ticketData.trainId }}</li>
+      <li class="list-group-item">მომხმარებელი: {{ ticketData.userId }}</li>
+      <li class="list-group-item">ადგილი: {{ ticketData.seat }}</li>
+      <li class="list-group-item">მგზავრობის თარიღი: {{ ticketData.date }}</li>
+    </ul>
+
+    <button class="btn btn-success" (click)="bookTicket()">დაჯავშნა</button>
+
+    <div *ngIf="bookingSuccess" class="alert alert-success mt-3">
+      ✅ ბილეთი წარმატებით დაიჯავშნა!
     </div>
-  
-    <div *ngIf="message" class="message">
-      {{ message }}
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
     </div>
   </div>
-  
+</div>

@@ -1,67 +1,88 @@
 .seats {
-    display: grid;
-    grid-template-columns: repeat(4, 60px);
-    gap: 12px;
-    justify-content: center;
-    margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 14px;
+  justify-content: center;
+  margin: 30px auto;
+  max-width: 400px;
+  padding: 10px;
+}
+
+.seat {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
-  
-  .seat {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    cursor: pointer;
-    color: white;
-    transition: 0.2s;
-  
-    &.first-class {
-      background-color: #1e88e5;
-    }
-  
-    &.second-class {
-      background-color: #43a047;
-    }
-  
-    &.business-class {
-      background-color: #f4511e;
-    }
-  
-    &.taken {
-      background-color: gray;
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
-  
-    &.selected {
-      border: 3px solid gold;
-    }
+
+  &.first-class {
+    background-color: #1e88e5;
   }
-  
-  .confirm-btn {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #009688;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-  
-    &:hover {
-      background-color: darken(#009688, 10%);
-    }
+
+  &.second-class {
+    background-color: #43a047;
   }
-  
-  .status, .ticket-status-check {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 16px;
-    color: #444;
+
+  &.business-class {
+    background-color: #f4511e;
   }
-  
+
+  &.taken {
+    background-color: #9e9e9e;
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+  }
+
+  &.selected {
+    border: 3px solid #ffd700;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.5);
+  }
+}
+
+.confirm-btn {
+  display: block;
+  margin: 30px auto;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #009688, #00695c);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0, 150, 136, 0.4);
+  transition: background 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #00796b, #004d40);
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background-color: #b2dfdb;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.status,
+.ticket-status-check {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
