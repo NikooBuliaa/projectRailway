@@ -1,47 +1,71 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { ToastrService, ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-booking-page',
-  // imports: [],
   standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ToastrModule,
+    BrowserAnimationsModule
+  ],
   templateUrl: './booking-page.component.html',
-  styleUrl: './booking-page.component.scss'
+  styleUrl: './booking-page.component.scss',
 })
-export class BookingPageComponent {
-  constructor(private api : ApiService) {
- 
+export class BookingPageComponent implements OnInit {
+  bookingForm!: FormGroup;
+  postObj: any;
+
+  constructor(
+      private fb: FormBuilder,
+      private api: ApiService,
+      @Inject(ToastrService) private toastr: ToastrService
+    ) {}
+
+  ngOnInit(): void {
+    this.bookingForm = this.fb.group({
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      idNumber: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', Validators.required],
+    });
   }
-  ngOnInit() {
-   console.log(JSON.parse(localStorage.getItem('trainId')!))
-   console.log(JSON.parse(localStorage.getItem('selectedSeat')!))
-  }
-   postObj : any
 
+  bookTkt(): void {
+    const trainId = JSON.parse(localStorage.getItem('trainId')!);
+    const selectedSeat = JSON.parse(localStorage.getItem('selectedSeat')!);
 
+    this.postObj = {
+      trainId: trainId,
+      date: new Date().toISOString(),
+      email: this.bookingForm.value.email,
+      phoneNumber: this.bookingForm.value.phoneNumber,
+      people: [
+        {
+          seatId: selectedSeat,
+          name: this.bookingForm.value.name,
+          surname: this.bookingForm.value.surname,
+          idNumber: this.bookingForm.value.idNumber,
+          status: 'booked',
+          payoutCompleted: true,
+        },
+      ],
+    };
 
-  bookTkt(){
-     this.api.registerTicket(this.postObj).subscribe(resp => console.log(resp))
+    this.api.registerTicket(this.postObj).subscribe({
+      next: () => {
+        this.toastr.success('ბილეთი წარმატებით დაიჯავშნა');
+        this.bookingForm.reset();
+      },
+      error: () => {
+        this.toastr.error('დაჯავშნისას მოხდა შეცდომა');
+      },
+    });
   }
 }
-
-
-
-
-
-// {
-//     "trainId": 0,
-//     "date": "2025-04-24T13:00:26.133Z",
-//     "email": "string",
-//     "phoneNumber": "string",
-//     "people": [
-//       {
-//         "seatId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//         "name": "string",
-//         "surname": "string",
-//         "idNumber": "string",
-//         "status": "string",
-//         "payoutCompleted": true
-//       }
-//     ]
-//   } 

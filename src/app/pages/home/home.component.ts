@@ -10,9 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 
 export class HomeComponent {
-  stations = [
-    { name: 'თბილისი', code: 'TBS' },
-    { name: 'ბათუმი', code: 'BTM' },
-    { name: 'ქუთაისი', code: 'KUT' }
-  ];
+  
 }

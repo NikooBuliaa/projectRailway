@@ -1,19 +1,19 @@
-
-<div class="vagon" *ngFor="let vagon of vagons">
-    <h3>{{vagon.name}}</h3>
-    <p>Train Number: {{vagon.trainNumber}}</p>
-    <div class="btns">
-        <button class="btnSeat" [disabled]="seat.isOccupied" 
-           *ngFor="let seat of vagon.seats"
-            (click)="selectSeat(seat.seatId, vagon.trainId)">
-            {{seat.number}}-{{seat.price}} GEL
-        </button>
-
-    </div>
-
-
+<div class="vagon" *ngFor="let vagon of vagons" 
+     [class.selected]="isVagonSelected(vagon)">
+  <h3>{{ vagon.name }}</h3>
+  <p>Train Number: {{ vagon.trainNumber }}</p>
+  <div class="btns">
+    <button class="btnSeat"
+            *ngFor="let seat of vagon.seats"
+            [disabled]="seat.isOccupied" 
+            (click)="selectSeat(seat, vagon.trainId)">
+      <span class="seat-info">
+        {{ seat.number }} - {{ seat.price }} GEL
+      </span>
+      <span *ngIf="seat.isOccupied" class="occupied">Occupied</span>
+    </button>
+  </div>
 </div>
-
 
 
 <!-- : 

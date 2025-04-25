@@ -1,20 +1,44 @@
+<div class="booking-container">
+  <!-- მგზავრობის დეტალები -->
+  <div class="trip-info">
+    <div>#812</div>
+    <div>თბილისი - ბათუმი Express</div>
+    <div>00:35 თბილისი</div>
+    <div>05:47 ბათუმი</div>
+  </div>
 
+  <!-- სამგზავრო ინფორმაცია -->
+  <h3>სამგზავრო ინფორმაცია</h3>
+  <form [formGroup]="bookingForm">
+    <input formControlName="name" placeholder="სახელი" />
+    <input formControlName="surname" placeholder="გვარი" />
+    <input formControlName="idNumber" placeholder="პირადი ნომერი" />
+    <input formControlName="email" placeholder="ელფოსტა" />
+    <input formControlName="phoneNumber" placeholder="ტელეფონის ნომერი" />
+  </form>
 
-<button (click)="bookTkt()">Book</button>
-<!-- 
-{
-    "trainId": 0,
-    "date": "2025-04-24T13:00:26.133Z",
-    "email": "string",
-    "phoneNumber": "string",
-    "people": [
-      {
-        "seatId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "name": "string",
-        "surname": "string",
-        "idNumber": "string",
-        "status": "string",
-        "payoutCompleted": true
-      }
-    ]
-  } -->
+  <!-- ბარგის ინფორმაცია -->
+  <h3>ბარგის ინფორმაცია</h3>
+  <div class="baggage">
+    <div>
+      <strong>Personal Item</strong>
+      <p>ჩანთა, პატარა ზურგჩანთა</p>
+      ✅ ჩათვლილია
+    </div>
+    <div>
+      <strong>Carry-on Bag</strong>
+      <p>ზედა თაროზე</p>
+      ✅ ჩათვლილია
+    </div>
+    <div>
+      <strong>Checked Bags</strong>
+      <p>დიდი ჩანთა</p>
+      ❌ არ შედის
+    </div>
+  </div>
+
+  <!-- დაჯავშნა -->
+  <button (click)="bookTkt()" [disabled]="!bookingForm.valid">
+    დაჯავშნა
+  </button>
+</div>

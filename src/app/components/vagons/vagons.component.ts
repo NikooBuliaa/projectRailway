@@ -8,46 +8,80 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './vagons.component.html',
-  styleUrl: './vagons.component.scss'
+  styleUrls: ['./vagons.component.scss']
 })
 export class VagonsComponent {
+  vagons: any[] = [];
+  selectedSeats: any[] = [];
+  selectedVagon: any = null;
+
+  selectedSeat = {
+    seatId: '',
+    name: '',
+    surname: '',
+    idNumber: '',
+    status: '',
+    payoutCompleted: true
+  };
+
+  postObject = {
+    trainId: 0,
+    date: new Date().toISOString(),
+    email: 'string',
+    phoneNumber: 'string'
+  };
+
   constructor(private route: ActivatedRoute, private api: ApiService) {
     this.route.params.subscribe(params => {
       const trainId = params['id'];
       this.api.getVagon(trainId).subscribe(result => {
-        this.vagons = result
+        this.vagons = result;
+        this.postObject.trainId = +trainId; // Automatically set trainId to postObject
         console.log(this.vagons);
       });
     });
-
-  }
-  vagons : any[] = [];
-  selectSeat(selectedSeat: string, trainId: number) {
-    console.log("Selected seat: ", selectedSeat, "in train: ", trainId);
-
-    this.selectedSeat.seatId = selectedSeat;
-
-    this.selectedSeats.push(this.selectedSeat);
-    localStorage.setItem('trainId', JSON.stringify(trainId)); 
-    localStorage.setItem('selectedSeat', JSON.stringify(this.selectedSeats)); 
-    
-  }
-  selectedSeats: any[] = [];
-   selectedSeat = {
-    seatId: "",
-    name: "",
-    surname: "",
-    idNumber: "",
-    status: "",
-    payoutCompleted: true
-   }
-
-  postObject = {
-      trainId: 0,
-      date: "2025-04-24T13:00:26.133Z",
-      email: "string",
-      phoneNumber: "string",
-    
   }
 
+  // Select seat function
+  selectSeat(seat: any, trainId: number) {
+    const isSelected = this.selectedSeats.some(s => s.seatId === seat.seatId);
+
+    if (isSelected) {
+      this.selectedSeats = this.selectedSeats.filter(s => s.seatId !== seat.seatId);
+    } else {
+      this.selectedSeats.push({ ...this.selectedSeat, seatId: seat.seatId });
+    }
+
+    // Save the trainId and selected seats in localStorage
+    localStorage.setItem('trainId', JSON.stringify(trainId));
+    localStorage.setItem('selectedSeat', JSON.stringify(this.selectedSeats));
+  }
+
+  // Group seats by row
+  groupSeatsByRow(seats: any[]): any[][] {
+    const grouped: { [key: string]: any[] } = {};
+
+    seats.forEach(seat => {
+      const rowNumberMatch = seat.seatId.match(/\d+/);
+      const rowNumber = rowNumberMatch ? rowNumberMatch[0] : 'unknown';
+      if (!grouped[rowNumber]) grouped[rowNumber] = [];
+      grouped[rowNumber].push(seat);
+    });
+
+    Object.keys(grouped).forEach(key => {
+      grouped[key].sort((a, b) => a.seatId.localeCompare(b.seatId));
+    });
+
+    return Object.values(grouped);
+  }
+
+  // Function to select a vagon
+  selectVagon(vagon: any) {
+    this.selectedVagon = this.selectedVagon === vagon ? null : vagon; // Toggle selection
+  }
+
+  // Check if vagon is selected
+  isVagonSelected(vagon: any): boolean {
+    return this.selectedVagon === vagon;
+  }
 }
