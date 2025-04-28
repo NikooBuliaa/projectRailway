@@ -3,6 +3,8 @@ import { ApiService } from '../../services/api.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-train-list',
@@ -16,6 +18,7 @@ export class TrainListComponent implements OnInit {
   from: string = '';
   to: string = '';
   date: string = '';
+  errorMessage: string = '';
 
   constructor(
     private api: ApiService,
@@ -35,10 +38,25 @@ export class TrainListComponent implements OnInit {
     });
   }
 
-  search() {
-    this.api.getDepartures(this.from, this.to, this.date).subscribe(result => {
+  search(): void {
+    // შეამოწმეთ, რომ არ იქნება იგივე პარამეტრები
+    if (!this.from || !this.to || !this.date) {
+      this.errorMessage = "გთხოვთ, შეავსოთ ყველა ველი.";
+      return;
+    }
+
+    this.api.getDepartures(this.from, this.to, this.date).pipe(
+      catchError(error => {
+        this.errorMessage = "მატარებლები ვერ მოიძებნა. სცადეთ თავიდან.";
+        return of([]);
+      })
+    ).subscribe(result => {
       this.trains = result[0]?.trains || [];
-      console.log(this.trains);
+      if (this.trains.length === 0) {
+        this.errorMessage = "თქვენს ძიებაში არ მოიძებნა მატარებლები.";
+      } else {
+        this.errorMessage = ''; // თუ ტრაინები მოიძებნა, ცარიელდება
+      }
     });
   }
 

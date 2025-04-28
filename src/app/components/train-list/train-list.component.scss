@@ -1,96 +1,102 @@
 .main-wrapper {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 2rem auto;
-  padding: 2rem;
-  background-color: #f5f7fa;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 3rem;
+  background-color: #f4f6f9;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .search-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-bottom: 2rem;
-  background-color: #fff;
-  padding: 1.5rem 2rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
 
-  select,
-  input[type='date'] {
-    flex: 1;
-    min-width: 150px;
-    padding: 0.8rem 1rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    background-color: #fefefe;
-    transition: 0.2s ease;
-  }
+.search-form select,
+.search-form input[type='date'] {
+  flex: 1;
+  min-width: 180px;
+  padding: 1rem 1.2rem;
+  font-size: 1.1rem;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  background-color: #fafafa;
+  transition: 0.3s ease;
+}
 
-  select:focus,
-  input[type='date']:focus {
-    outline: none;
-    border-color: #ef3e36;
-    box-shadow: 0 0 0 3px rgba(239, 62, 54, 0.2);
-  }
+.search-form select:focus,
+.search-form input[type='date']:focus {
+  outline: none;
+  border-color: #ef3e36;
+  box-shadow: 0 0 0 3px rgba(239, 62, 54, 0.2);
+}
 
-  button {
-    padding: 0.8rem 2rem;
-    background-color: #ef3e36;
-    color: #fff;
-    font-weight: 600;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s ease;
-  }
+.search-form button {
+  padding: 1rem 2.5rem;
+  background-color: #ef3e36;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-  button:hover {
-    background-color: #c53030;
-    transform: scale(1.03);
-  }
+.search-form button:hover {
+  background-color: #d92d2d;
+  transform: translateY(-3px);
 }
 
 .trains {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .train-card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  border-left: 6px solid #ef3e36;
-  transition: transform 0.2s;
+  background-color: #ffffff;
+  border-radius: 25px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-left: 8px solid #ef3e36;
+  transition: transform 0.3s ease;
 }
 
 .train-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-7px);
 }
 
 .train-header {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 1rem;
-  color: #2c2c2c;
+  margin-bottom: 1.5rem;
+  color: #333333;
 }
 
 .train-info {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  font-size: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1.5rem;
+  font-size: 1.1rem;
   color: #555;
 
   div {
-    background-color: #f7f7f7;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 12px;
   }
 
   strong {
@@ -99,25 +105,43 @@
 }
 
 .vagons {
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
   display: flex;
-  gap: 1rem;
+  gap: 1.3rem;
   flex-wrap: wrap;
 
   button {
     background-color: #ef3e36;
     color: white;
     border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.3s ease;
-    box-shadow: 0 3px 10px rgba(239, 62, 54, 0.3);
+    transition: transform 0.3s ease, background-color 0.2s ease;
+    box-shadow: 0 4px 10px rgba(239, 62, 54, 0.2);
   }
 
   button:hover {
-    background-color: #b82323;
-    transform: translateY(-2px);
+    background-color: #c53030;
+    transform: translateY(-4px);
   }
+}
+
+.ticket-btn {
+  padding: 1rem 2rem;
+  background-color: #ef3e36;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.2s ease;
+  box-shadow: 0 4px 10px rgba(239, 62, 54, 0.2);
+  margin-top: 2rem;
+}
+
+.ticket-btn:hover {
+  background-color: #c53030;
+  transform: translateY(-4px);
 }
