@@ -11,8 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ToastrModule,
-    BrowserAnimationsModule
+    // ToastrModule,
+    // BrowserAnimationsModule  ესენი app.config ში გავიტანე
   ],
   templateUrl: './booking-page.component.html',
   styleUrl: './booking-page.component.scss',
@@ -24,7 +24,7 @@ export class BookingPageComponent implements OnInit {
   constructor(
       private fb: FormBuilder,
       private api: ApiService,
-      @Inject(ToastrService) private toastr: ToastrService
+      private toastr: ToastrService
     ) {}
 
   ngOnInit(): void {

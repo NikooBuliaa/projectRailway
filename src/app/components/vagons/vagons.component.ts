@@ -42,21 +42,29 @@ export class VagonsComponent {
     });
   }
 
-  // Select seat function
-  selectSeat(seat: any, trainId: number) {
-    const isSelected = this.selectedSeats.some(s => s.seatId === seat.seatId);
+  classSelected = ""
 
-    if (isSelected) {
-      this.selectedSeats = this.selectedSeats.filter(s => s.seatId !== seat.seatId);
-    } else {
-      this.selectedSeats.push({ ...this.selectedSeat, seatId: seat.seatId });
-    }
-
-    // Save the trainId and selected seats in localStorage
-    localStorage.setItem('trainId', JSON.stringify(trainId));
-    localStorage.setItem('selectedSeat', JSON.stringify(this.selectedSeats));
+selectSeat(seat: any, trainId: number) {
+  const isSelected = this.isSeatSelected(seat.seatId);
+  
+  if (isSelected) {
+    this.selectedSeats = this.selectedSeats.filter(s => s.seatId !== seat.seatId);
+  } else {
+    this.selectedSeats.push({
+      seatId: seat.seatId,
+      number: seat.number,
+      price: seat.price,
+      trainId: trainId
+    });
   }
 
+  localStorage.setItem('trainId', JSON.stringify(trainId));
+  localStorage.setItem('selectedSeat', JSON.stringify(this.selectedSeats));
+}
+
+isSeatSelected(seatId: number): boolean {
+  return this.selectedSeats.some(s => s.seatId === seatId);
+}
   // Group seats by row
   groupSeatsByRow(seats: any[]): any[][] {
     const grouped: { [key: string]: any[] } = {};

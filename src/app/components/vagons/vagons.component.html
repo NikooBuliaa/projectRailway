@@ -3,7 +3,8 @@
   <h3>{{ vagon.name }}</h3>
   <p>Train Number: {{ vagon.trainNumber }}</p>
   <div class="btns">
-    <button class="btnSeat"
+    <button class="btnSeat" 
+    [class.selected]="isSeatSelected(seat.seatId)"
             *ngFor="let seat of vagon.seats"
             [disabled]="seat.isOccupied" 
             (click)="selectSeat(seat, vagon.trainId)">
